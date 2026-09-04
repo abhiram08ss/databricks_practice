@@ -17,6 +17,34 @@
       ],
       "catalog": "databricks_assesment",
       "schema": "gold"
+    },
+    {
+      "name": "a33f8e5d",
+      "displayName": "Event Dataset",
+      "queryLines": [
+        "SELECT\r\n",
+        "    DATE(window.start) AS event_date,\r\n",
+        "    SUM(trade_count) AS total_events\r\n",
+        "FROM databricks_assesment.gold.stream_gold_symbol_metrics\r\n",
+        "GROUP BY DATE(window.start)\r\n",
+        "ORDER BY event_date;"
+      ],
+      "catalog": "databricks_assesment",
+      "schema": "gold"
+    },
+    {
+      "name": "332a7b88",
+      "displayName": "Aggregated Gold Market Metrics Summary Dataset",
+      "queryLines": [
+        "SELECT\r\n",
+        "    SUM(gross_value) AS total_gross_value,\r\n",
+        "    SUM(trade_count) AS total_trade_count,\r\n",
+        "    SUM(buy_value) AS total_buy_value,\r\n",
+        "    SUM(sell_value) AS total_sell_value\r\n",
+        "FROM databricks_assesment.gold.stream_gold_symbol_metrics;"
+      ],
+      "catalog": "databricks_assesment",
+      "schema": "gold"
     }
   ],
   "pages": [
@@ -77,8 +105,8 @@
             }
           },
           "position": {
-            "x": 6,
-            "y": 0,
+            "x": 7,
+            "y": 3,
             "width": 5,
             "height": 6
           }
@@ -173,8 +201,8 @@
           },
           "position": {
             "x": 1,
-            "y": 0,
-            "width": 5,
+            "y": 9,
+            "width": 11,
             "height": 6
           }
         },
@@ -235,7 +263,7 @@
           },
           "position": {
             "x": 1,
-            "y": 6,
+            "y": 15,
             "width": 10,
             "height": 6
           }
@@ -296,9 +324,240 @@
           },
           "position": {
             "x": 1,
-            "y": 12,
+            "y": 21,
             "width": 10,
             "height": 9
+          }
+        },
+        {
+          "widget": {
+            "name": "8603d343",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a33f8e5d",
+                  "fields": [
+                    {
+                      "name": "event_date",
+                      "expression": "`event_date`"
+                    },
+                    {
+                      "name": "sum(total_events)",
+                      "expression": "SUM(`total_events`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "event_date",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_events)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 3,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "total-trade-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "332a7b88",
+                  "fields": [
+                    {
+                      "name": "sum(total_trade_count)",
+                      "expression": "SUM(`total_trade_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Trade Count",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_trade_count)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total-sell-value",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "332a7b88",
+                  "fields": [
+                    {
+                      "name": "sum(total_sell_value)",
+                      "expression": "SUM(`total_sell_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Sell Value",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_sell_value)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total-buy-value",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "332a7b88",
+                  "fields": [
+                    {
+                      "name": "sum(total_buy_value)",
+                      "expression": "SUM(`total_buy_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Buy Value",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_buy_value)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total-gross-value",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "332a7b88",
+                  "fields": [
+                    {
+                      "name": "sum(total_gross_value)",
+                      "expression": "SUM(`total_gross_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Total Gross Value",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_gross_value)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 10,
+            "y": 0,
+            "width": 2,
+            "height": 3
           }
         }
       ],
