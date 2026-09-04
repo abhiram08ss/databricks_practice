@@ -1,0 +1,315 @@
+{
+  "datasets": [
+    {
+      "name": "af7b50bc",
+      "displayName": "Gold Dataset Aggregated",
+      "queryLines": [
+        "SELECT\r\n",
+        "    window.start AS window_start,\r\n",
+        "    window.end AS window_end,\r\n",
+        "    symbol,\r\n",
+        "    trade_count,\r\n",
+        "    gross_value,\r\n",
+        "    buy_value,\r\n",
+        "    sell_value\r\n",
+        "FROM databricks_assesment.gold.stream_gold_symbol_metrics\r\n",
+        "ORDER BY window_start;"
+      ],
+      "catalog": "databricks_assesment",
+      "schema": "gold"
+    }
+  ],
+  "pages": [
+    {
+      "name": "1b59fecb",
+      "displayName": "Dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "d250d315",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "af7b50bc",
+                  "fields": [
+                    {
+                      "name": "symbol",
+                      "expression": "`symbol`"
+                    },
+                    {
+                      "name": "sum(trade_count)",
+                      "expression": "SUM(`trade_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": {
+                  "value": "Trade Count by Symbol",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "symbol",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(trade_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "20706820",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "af7b50bc",
+                  "fields": [
+                    {
+                      "name": "window_start",
+                      "expression": "`window_start`"
+                    },
+                    {
+                      "name": "gross_value",
+                      "expression": "`gross_value`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "window_start",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "gross_value",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "5683ec9c",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "af7b50bc",
+                  "fields": [
+                    {
+                      "name": "symbol",
+                      "expression": "`symbol`"
+                    },
+                    {
+                      "name": "sum(buy_value)",
+                      "expression": "SUM(`buy_value`)"
+                    },
+                    {
+                      "name": "sum(sell_value)",
+                      "expression": "SUM(`sell_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "symbol",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "fields": [
+                    {
+                      "fieldName": "sum(buy_value)"
+                    },
+                    {
+                      "fieldName": "sum(sell_value)"
+                    }
+                  ]
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 6,
+            "width": 10,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "1fbc05be",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "af7b50bc",
+                  "fields": [
+                    {
+                      "name": "symbol",
+                      "expression": "`symbol`"
+                    },
+                    {
+                      "name": "trade_count",
+                      "expression": "`trade_count`"
+                    },
+                    {
+                      "name": "buy_value",
+                      "expression": "`buy_value`"
+                    },
+                    {
+                      "name": "sell_value",
+                      "expression": "`sell_value`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "symbol"
+                  },
+                  {
+                    "fieldName": "trade_count"
+                  },
+                  {
+                    "fieldName": "buy_value"
+                  },
+                  {
+                    "fieldName": "sell_value"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 12,
+            "width": 10,
+            "height": 9
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
